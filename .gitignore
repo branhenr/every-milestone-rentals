@@ -1,0 +1,34 @@
+# Environment / Secrets
+.env
+.env.local
+.env.*.local
+*.properties.local
+application.properties
+!application.properties.example
+
+# Java / Maven
+backend/target/
+backend/.mvn/
+backend/*.class
+backend/*.jar
+backend/application-local.properties
+backend/application-secret.properties
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# VS Code
+.vscode/launch.json
+.vscode/settings.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

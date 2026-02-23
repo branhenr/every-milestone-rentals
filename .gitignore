@@ -3,8 +3,6 @@
 .env.local
 .env.*.local
 *.properties.local
-application.properties
-!application.properties.example
 
 # Java / Maven
 backend/target/
@@ -18,12 +16,9 @@ backend/application-secret.properties
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
-frontend/.env
-frontend/.env.local
 frontend/.env.production
 
 # VS Code
-.vscode/launch.json
 .vscode/settings.json
 
 # OS

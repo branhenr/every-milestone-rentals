@@ -1,23 +1,43 @@
 const mockAnalytics = {
-  summary: {
-    totalRevenue: 12450,
-    totalExpenses: 1876,
-    netProfit: 10574
-  },
-  monthlyRevenue: [
-    { month: "Sep", revenue: 980 },
-    { month: "Oct", revenue: 1450 },
-    { month: "Nov", revenue: 2100 },
-    { month: "Dec", revenue: 3200 },
-    { month: "Jan", revenue: 1800 },
-    { month: "Feb", revenue: 2920 }
+  revenueEntries: [
+    { id: 101, date: "2025-03-12", amount: 620,  description: "Johnson Wedding — Tables & Chairs" },
+    { id: 102, date: "2025-04-05", amount: 850,  description: "Reyes Corporate Gala" },
+    { id: 103, date: "2025-04-22", amount: 410,  description: "Williams Baby Shower" },
+    { id: 104, date: "2025-05-18", amount: 1100, description: "Davis Graduation Party" },
+    { id: 105, date: "2025-06-07", amount: 730,  description: "Martinez Quinceañera" },
+    { id: 106, date: "2025-07-14", amount: 980,  description: "Thompson Reunion" },
+    { id: 107, date: "2025-08-03", amount: 1250, description: "Clark Church Event" },
+    { id: 108, date: "2025-09-20", amount: 890,  description: "Hall Anniversary Dinner" },
+    { id: 109, date: "2025-10-11", amount: 1450, description: "Lewis Fall Festival Tables" },
+    { id: 110, date: "2025-11-08", amount: 2100, description: "Walker Fundraiser Gala" },
+    { id: 111, date: "2025-12-06", amount: 3200, description: "Young Christmas Banquet" },
+    { id: 112, date: "2025-12-20", amount: 1600, description: "Scott Holiday Party" },
+    { id: 113, date: "2026-01-11", amount: 980,  description: "Adams New Year Celebration" },
+    { id: 114, date: "2026-01-25", amount: 820,  description: "Baker Corporate Lunch" },
+    { id: 115, date: "2026-02-10", amount: 620,  description: "Reyes Valentine Dinner" },
+    { id: 116, date: "2026-02-22", amount: 1300, description: "Carter Engagement Party" },
+    { id: 117, date: "2026-03-15", amount: 850,  description: "Johnson Corporate Event" },
+    { id: 118, date: "2026-03-22", amount: 1200, description: "Williams Spring Gala" },
   ],
-  expenses: [
-    { id: 1, date: "2026-02-01", category: "Fuel", amount: 85.40, description: "Gas for February deliveries" },
-    { id: 2, date: "2026-02-08", category: "Maintenance", amount: 120.00, description: "Chair repair" },
-    { id: 3, date: "2026-01-15", category: "Supplies", amount: 45.00, description: "Cleaning supplies" },
-    { id: 4, date: "2026-01-22", category: "Fuel", amount: 92.30, description: "Gas for January deliveries" }
-  ]
+
+  expenseEntries: [
+    { id: 1,  date: "2025-03-15", category: "Fuel",        amount: 74.20,  description: "Gas for March deliveries" },
+    { id: 2,  date: "2025-04-10", category: "Supplies",    amount: 32.50,  description: "Cleaning supplies restock" },
+    { id: 3,  date: "2025-05-02", category: "Maintenance", amount: 95.00,  description: "Table leg repair x4" },
+    { id: 4,  date: "2025-06-18", category: "Fuel",        amount: 81.60,  description: "Gas for June deliveries" },
+    { id: 5,  date: "2025-07-09", category: "Supplies",    amount: 48.00,  description: "Linen laundering supplies" },
+    { id: 6,  date: "2025-08-22", category: "Maintenance", amount: 150.00, description: "Chair leg weld repair" },
+    { id: 7,  date: "2025-09-14", category: "Fuel",        amount: 78.90,  description: "Gas for September runs" },
+    { id: 8,  date: "2025-10-05", category: "Other",       amount: 60.00,  description: "Storage unit fee" },
+    { id: 9,  date: "2025-11-19", category: "Fuel",        amount: 88.40,  description: "Gas for November deliveries" },
+    { id: 10, date: "2025-12-03", category: "Supplies",    amount: 55.00,  description: "Year-end supply restock" },
+    { id: 11, date: "2025-12-28", category: "Maintenance", amount: 200.00, description: "Van oil change & tire rotation" },
+    { id: 12, date: "2026-01-15", category: "Supplies",    amount: 45.00,  description: "Cleaning supplies" },
+    { id: 13, date: "2026-01-22", category: "Fuel",        amount: 92.30,  description: "Gas for January deliveries" },
+    { id: 14, date: "2026-02-01", category: "Fuel",        amount: 85.40,  description: "Gas for February deliveries" },
+    { id: 15, date: "2026-02-08", category: "Maintenance", amount: 120.00, description: "Chair repair" },
+    { id: 16, date: "2026-03-10", category: "Other",       amount: 60.00,  description: "Storage unit monthly fee" },
+  ],
 }
 
 export default mockAnalytics

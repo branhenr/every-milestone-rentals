@@ -4,6 +4,7 @@ import BookingsPage from './pages/BookingsPage'
 import InventoryPage from './pages/InventoryPage'
 import AnalyticsPage from './pages/AnalyticsPage'
 import CatalogPage from './pages/CatalogPage'
+import CalendarPage from './pages/CalendarPage'
 import AdminLayout from './components/AdminLayout'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/admin/analytics" element={<AnalyticsPage />} />
         <Route path="/admin/bookings" element={<BookingsPage />} />
         <Route path="/admin/inventory" element={<InventoryPage />} />
+        <Route path="/admin/calendar" element={<CalendarPage />} />
       </Route>
     </Routes>
   )

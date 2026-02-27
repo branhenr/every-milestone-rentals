@@ -7,6 +7,7 @@ const navItems = [
   { label: 'Analytics', path: '/admin/analytics' },
   { label: 'Bookings', path: '/admin/bookings' },
   { label: 'Inventory', path: '/admin/inventory' },
+  { label: 'Calendar', path: '/admin/calendar' },
 ];
 
 export default function Sidebar({ isOpen = true }) {

@@ -93,3 +93,129 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.fc {
+  --fc-border-color: var(--color-border-subtle);
+  --fc-border-style: solid;
+  --fc-bg-event-opacity: 0.9;
+  --fc-today-bg-color: #2e1a3a99;
+  --fc-page-bg-color: transparent;
+  --fc-neutral-bg-color: transparent;
+  --fc-list-event-hover-bg-color: #2d5a3d;
+}
+
+.fc .fc-toolbar-title {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex: 1;
+  text-align: center;
+}
+
+.fc .fc-col-header-cell {
+  background-color: var(--color-border-subtle);
+  padding: 6px 0;
+}
+
+.fc .fc-col-header-cell-cushion,
+.fc .fc-daygrid-day-number {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.fc .fc-daygrid-day-number:hover {
+  color: white;
+}
+
+/* Toolbar buttons */
+.fc .fc-button-primary {
+  background-color: var(--color-bg-card);
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: var(--color-border-subtle);
+  border-color: var(--color-border-input);
+  color: white;
+}
+
+.fc .fc-button-primary:focus,
+.fc .fc-button-primary:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-brand);
+  outline: none;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: var(--color-border-input);
+  border-color: var(--color-brand);
+  color: white;
+  box-shadow: none;
+}
+
+/* Grid lines */
+.fc td,
+.fc th {
+  border-width: 2px;
+}
+
+/* Day cells */
+.fc .fc-daygrid-day {
+  background-color: transparent;
+}
+
+.fc .fc-day-other .fc-daygrid-day-number {
+  color: var(--color-text-faint);
+}
+
+/* Event pill */
+.fc .fc-daygrid-event {
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 1px 4px;
+}
+
+.fc .fc-event-title {
+  color: white;
+}
+
+/* Mobile overrides */
+@media (max-width: 639px) {
+  .fc .fc-toolbar-title {
+    font-size: 1.1rem;
+  }
+
+  .fc .fc-toolbar.fc-header-toolbar {
+    gap: 0.5rem;
+  }
+
+  .fc .fc-button-primary {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .fc .fc-col-header-cell-cushion {
+    font-size: 0.65rem;
+    padding: 4px 2px;
+  }
+
+  .fc .fc-daygrid-day-number {
+    font-size: 0.7rem;
+    padding: 2px 4px;
+  }
+
+  .fc .fc-daygrid-day-frame {
+    min-height: 3rem;
+  }
+
+  .fc .fc-daygrid-event {
+    font-size: 0.65rem;
+    padding: 1px 2px;
+  }
+}

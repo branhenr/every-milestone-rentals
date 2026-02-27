@@ -38,6 +38,25 @@ const mockBookings = [
     ]
   },
   {
+    id: 4,
+    contactName: "Tanya Brooks",
+    phone: "(336) 555-0561",
+    email: "tanya.brooks@gmail.com",
+    eventDate: "2026-03-08",
+    location: "312 Garden Terrace, Burlington, NC",
+    dropOffTime: "11:00",
+    pickUpTime: "21:00",
+    deliveryFee: 50,
+    payAmount: 740,
+    depositAmount: 0,
+    paymentStatus: "UNPAID",
+    status: "UPCOMING",
+    items: [
+      { inventoryItem: "6 Foot Rectangular Table", quantity: 6, pricePerItem: 12 },
+      { inventoryItem: "White Folding Chair", quantity: 50, pricePerItem: 5 }
+    ]
+  },
+  {
     id: 3,
     contactName: "David Reyes",
     phone: "(336) 555-0334",

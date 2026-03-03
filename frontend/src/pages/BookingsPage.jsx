@@ -4,6 +4,16 @@ import Modal from '../components/Modal';
 import BookingForm from '../components/BookingForm';
 import Button from '../components/Button';
 
+const filterSelectStyle = {
+  backgroundColor: 'var(--color-bg-input)',
+  border: '1px solid var(--color-border-input)',
+  borderRadius: '8px',
+  color: 'white',
+  fontSize: '13px',
+  padding: '6px 12px',
+  outline: 'none',
+};
+
 function formatDate(dateStr) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
     month: 'short',
@@ -28,12 +38,14 @@ function StatusBadge({ value }) {
     COMPLETED: null,
     DEPOSIT: null,
     PAID: null,
+    UNPAID: null,
   };
 
   const classNames = {
     UPCOMING: '',
     COMPLETED: 'text-green-400 bg-green-900/30 border border-green-800/40',
     DEPOSIT: 'text-yellow-400 bg-yellow-900/30 border border-yellow-800/40',
+    UNPAID: 'text-red-400 bg-red-900/30 border border-red-800/40',
     PAID: 'text-green-400 bg-green-900/30 border border-green-800/40',
   };
 
@@ -51,6 +63,33 @@ export default function BookingsPage() {
   const [bookings, setBookings] = useState(mockBookings);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBooking, setEditingBooking] = useState(null);
+
+  const [filterMonth,   setFilterMonth]   = useState('All');
+  const [filterPayment, setFilterPayment] = useState('All');
+  const [filterStatus,  setFilterStatus]  = useState('All');
+
+  // ── derived: available month options ────────────────────────────────────────
+  const availableMonths = [
+    { label: 'All Months', value: 'All' },
+    ...Array.from(new Set(bookings.map((b) => b.eventDate.slice(0, 7))))
+      .sort()
+      .map((ym) => ({
+        label: new Date(`${ym}-01T00:00:00`).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        value: ym,
+      })),
+  ];
+
+  // ── derived: filtered + sorted bookings ─────────────────────────────────────
+  const displayedBookings = bookings
+    .filter((b) => {
+      if (filterMonth   !== 'All' && !b.eventDate.startsWith(filterMonth)) return false;
+      if (filterPayment !== 'All' && b.paymentStatus !== filterPayment)    return false;
+      if (filterStatus  !== 'All' && b.status        !== filterStatus)     return false;
+      return true;
+    })
+    .sort((a, b) => a.eventDate.localeCompare(b.eventDate));
+
+  const hasFilters = filterMonth !== 'All' || filterPayment !== 'All' || filterStatus !== 'All';
 
   function handleOpenNewBooking() {
     setEditingBooking(null);
@@ -73,17 +112,52 @@ export default function BookingsPage() {
 
   return (
     <div className="flex flex-col gap-6">
+
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Bookings</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-            {bookings.length} booking{bookings.length !== 1 ? 's' : ''} total
+            {displayedBookings.length} of {bookings.length} booking{bookings.length !== 1 ? 's' : ''}
           </p>
         </div>
         <Button onClick={handleOpenNewBooking} className="px-5">
           + New Booking
         </Button>
+      </div>
+
+      {/* Filters */}
+      <div className="flex flex-wrap items-center gap-3">
+        <select
+          value={filterMonth}
+          onChange={(e) => setFilterMonth(e.target.value)}
+          style={filterSelectStyle}
+        >
+          {availableMonths.map(({ label, value }) => (
+            <option key={value} value={value}>{label}</option>
+          ))}
+        </select>
+
+        <select
+          value={filterPayment}
+          onChange={(e) => setFilterPayment(e.target.value)}
+          style={filterSelectStyle}
+        >
+          <option value="All">All Payments</option>
+          <option value="DEPOSIT">Deposit</option>
+          <option value="PAID">Paid</option>
+          <option value="UNPAID">Unpaid</option>
+        </select>
+
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          style={filterSelectStyle}
+        >
+          <option value="All">All Statuses</option>
+          <option value="UPCOMING">Upcoming</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
       </div>
 
       {/* Desktop Table */}
@@ -103,7 +177,7 @@ export default function BookingsPage() {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((booking) => {
+            {displayedBookings.map((booking) => {
               const { summary, extra } = formatItemsSummary(booking.items);
               return (
                 <tr
@@ -158,22 +232,24 @@ export default function BookingsPage() {
           </tbody>
         </table>
 
-        {bookings.length === 0 && (
+        {displayedBookings.length === 0 && (
           <div className="py-16 text-center" style={{ color: 'var(--color-text-faint)' }}>
-            No bookings yet. Click &ldquo;+ New Booking&rdquo; to add one.
+            {hasFilters
+              ? 'No bookings match the selected filters.'
+              : 'No bookings yet. Click \u201c+ New Booking\u201d to add one.'}
           </div>
         )}
       </div>
 
       {/* Mobile Cards */}
       <div className="flex flex-col gap-3 md:hidden">
-        {bookings.length === 0 && (
+        {displayedBookings.length === 0 && (
           <div className="py-12 text-center rounded-xl" style={{ color: 'var(--color-text-faint)', border: '1px solid var(--color-border-subtle)' }}>
-            No bookings yet.
+            {hasFilters ? 'No bookings match the selected filters.' : 'No bookings yet.'}
           </div>
         )}
 
-        {bookings.map((booking) => {
+        {displayedBookings.map((booking) => {
           const { summary, extra } = formatItemsSummary(booking.items);
           return (
             <div

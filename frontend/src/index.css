@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @theme {
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+
   /* Brand */
   --color-brand: #994896;
   --color-brand-gradient-from: #7e22ce;
@@ -28,7 +32,7 @@
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -55,6 +59,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 
 h1 {

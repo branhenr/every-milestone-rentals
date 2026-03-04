@@ -50,36 +50,33 @@ export default function InventoryPage() {
 
         <div className="flex items-center gap-3">
           {/* View toggle */}
-          <div className="flex flex-col items-center gap-1">
-            <span className="text-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>Views</span>
-            <div
-              className="flex items-center gap-1 rounded-lg p-1"
+          <div
+            className="flex items-center gap-1 rounded-lg p-1"
+            style={{
+              backgroundColor: 'var(--color-bg-card)',
+              border: '1px solid var(--color-border-subtle)',
+            }}
+          >
+            <button
+              onClick={() => setView('table')}
+              className="rounded-md px-3 py-2.5 text-sm font-semibold transition-colors"
               style={{
-                backgroundColor: 'var(--color-bg-card)',
-                border: '1px solid var(--color-border-subtle)',
+                backgroundColor: view === 'table' ? '#2e1a3a' : 'transparent',
+                color: view === 'table' ? 'white' : 'var(--color-text-muted)',
               }}
             >
-              <button
-                onClick={() => setView('table')}
-                className="rounded-md px-3 py-1 text-xs font-semibold transition-colors"
-                style={{
-                  backgroundColor: view === 'table' ? '#2e1a3a' : 'transparent',
-                  color: view === 'table' ? 'white' : 'var(--color-text-muted)',
-                }}
-              >
-                Table
-              </button>
-              <button
-                onClick={() => setView('grid')}
-                className="rounded-md px-3 py-1 text-xs font-semibold transition-colors"
-                style={{
-                  backgroundColor: view === 'grid' ? '#2e1a3a' : 'transparent',
-                  color: view === 'grid' ? 'white' : 'var(--color-text-muted)',
-                }}
-              >
-                Grid
-              </button>
-            </div>
+              Table
+            </button>
+            <button
+              onClick={() => setView('grid')}
+              className="rounded-md px-3 py-2.5 text-sm font-semibold transition-colors"
+              style={{
+                backgroundColor: view === 'grid' ? '#2e1a3a' : 'transparent',
+                color: view === 'grid' ? 'white' : 'var(--color-text-muted)',
+              }}
+            >
+              Grid
+            </button>
           </div>
 
           <Button onClick={handleOpenModal} className="px-5">

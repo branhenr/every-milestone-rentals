@@ -245,8 +245,8 @@ export default function AnalyticsPage() {
         {/* Donut Chart */}
         <div className="rounded-xl p-5" style={chartCardStyle}>
           <h2 className="text-sm font-semibold text-white mb-4">Revenue vs Expenses</h2>
-          <ResponsiveContainer width="100%" height={240}>
-            <PieChart>
+          <ResponsiveContainer width="100%" height={280}>
+            <PieChart margin={{ top: 10, right: 5, bottom: 5, left: 5 }}>
               <Pie
                 data={donutData}
                 cx="50%"

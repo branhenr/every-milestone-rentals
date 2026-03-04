@@ -105,14 +105,8 @@ export default function LoginPage() {
               placeholder="admin@everymilestone.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all focus:ring-2"
-              style={{
-                backgroundColor: 'var(--color-bg-input)',
-                border: '1px solid var(--color-border-input)',
-                focusRingColor: '#d946ef',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = 'var(--color-border-focus)')}
-              onBlur={(e) => (e.target.style.borderColor = 'var(--color-border-input)')}
+              className="w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all border border-[var(--color-border-input)] focus:border-[var(--color-border-focus)]"
+              style={{ backgroundColor: 'var(--color-bg-input)' }}
             />
           </div>
 
@@ -132,13 +126,8 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all"
-              style={{
-                backgroundColor: 'var(--color-bg-input)',
-                border: '1px solid var(--color-border-input)',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = 'var(--color-border-focus)')}
-              onBlur={(e) => (e.target.style.borderColor = 'var(--color-border-input)')}
+              className="w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all border border-[var(--color-border-input)] focus:border-[var(--color-border-focus)]"
+              style={{ backgroundColor: 'var(--color-bg-input)' }}
             />
           </div>
 

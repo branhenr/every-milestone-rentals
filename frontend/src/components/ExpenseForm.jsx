@@ -11,20 +11,11 @@ const DEFAULT_FORM = {
 };
 
 const inputClass =
-  'w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all';
+  'w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all border border-[var(--color-border-input)] focus:border-[var(--color-border-focus)]';
 
 const inputStyle = {
   backgroundColor: 'var(--color-bg-input)',
-  border: '1px solid var(--color-border-input)',
 };
-
-function focusOn(e) {
-  e.target.style.borderColor = 'var(--color-border-focus)';
-}
-
-function focusOff(e) {
-  e.target.style.borderColor = 'var(--color-border-input)';
-}
 
 function FieldLabel({ htmlFor, children }) {
   return (
@@ -93,8 +84,7 @@ export default function ExpenseForm({ onSubmit, onCancel, loading = false }) {
             onChange={(e) => setField('date', e.target.value)}
             className={inputClass}
             style={{ ...inputStyle, colorScheme: 'dark' }}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.date} />
         </div>
@@ -108,8 +98,7 @@ export default function ExpenseForm({ onSubmit, onCancel, loading = false }) {
             onChange={(e) => setField('category', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           >
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -131,8 +120,7 @@ export default function ExpenseForm({ onSubmit, onCancel, loading = false }) {
             onChange={(e) => setField('amount', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.amount} />
         </div>
@@ -148,8 +136,7 @@ export default function ExpenseForm({ onSubmit, onCancel, loading = false }) {
             onChange={(e) => setField('description', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.description} />
         </div>

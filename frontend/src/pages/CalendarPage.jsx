@@ -35,10 +35,17 @@ function PaymentBadge({ status }) {
   )
 }
 
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
 export default function CalendarPage() {
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640)
+  const [currentDate, setCurrentDate] = useState(new Date())
+  const [pickerYear, setPickerYear] = useState(new Date().getFullYear())
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const calendarRef = useRef(null)
+  const containerRef = useRef(null)
+  const dropdownRef = useRef(null)
 
   useEffect(() => {
     function handleResize() {
@@ -47,6 +54,42 @@ export default function CalendarPage() {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  useEffect(() => {
+    if (!containerRef.current) return
+    const observer = new ResizeObserver(() => {
+      calendarRef.current?.getApi().updateSize()
+    })
+    observer.observe(containerRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!dropdownOpen) return
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [dropdownOpen])
+
+  function handleDatesSet({ start }) {
+    const mid = new Date(start.getTime() + 15 * 24 * 60 * 60 * 1000)
+    setCurrentDate(mid)
+    setPickerYear(mid.getFullYear())
+  }
+
+  function openDropdown() {
+    setPickerYear(currentDate.getFullYear())
+    setDropdownOpen(true)
+  }
+
+  function goToMonth(monthIndex) {
+    calendarRef.current?.getApi().gotoDate(new Date(pickerYear, monthIndex, 1))
+    setDropdownOpen(false)
+  }
 
   function handleEventClick({ event }) {
     setSelectedEvent({
@@ -57,23 +100,89 @@ export default function CalendarPage() {
     })
   }
 
+  const navBtnClass = "px-2 py-1 rounded-md text-sm font-medium transition-colors hover:bg-[#2e1a3a]"
+  const navBtnStyle = { color: 'var(--color-text-muted)', background: 'transparent', border: 'none', cursor: 'pointer' }
+
   return (
     <div className="p-3 sm:p-6 space-y-4 sm:space-y-6">
       <h1 className="text-2xl font-bold text-white">Calendar</h1>
 
-      <div className="rounded-xl border border-white/10 bg-white/5 p-2 sm:p-4">
+      <div ref={containerRef} className="rounded-xl border border-white/10 bg-white/5 p-2 sm:p-4 space-y-3">
+        {/* Custom toolbar */}
+        <div className="flex items-center justify-between px-1">
+          {/* Left: nav buttons */}
+          <div className="flex items-center gap-1">
+            <button className={navBtnClass} style={navBtnStyle} onClick={() => calendarRef.current?.getApi().prev()}>‹</button>
+            <button className={navBtnClass} style={navBtnStyle} onClick={() => calendarRef.current?.getApi().next()}>›</button>
+            {!isMobile && (
+              <button className={navBtnClass} style={navBtnStyle} onClick={() => calendarRef.current?.getApi().today()}>Today</button>
+            )}
+          </div>
+
+          {/* Center: clickable title with dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={openDropdown}
+              className="flex items-center gap-1 px-3 py-1 rounded-md text-sm font-semibold text-white transition-colors hover:bg-[#2e1a3a]"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+            >
+              {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>▾</span>
+            </button>
+
+            {dropdownOpen && (
+              <div
+                className="absolute left-1/2 -translate-x-1/2 top-full mt-1 z-50 rounded-xl p-3 w-56"
+                style={{ backgroundColor: 'var(--color-bg-card)', border: '1px solid var(--color-border-subtle)' }}
+              >
+                {/* Year row */}
+                <div className="flex items-center justify-between mb-2 px-1">
+                  <button className={navBtnClass} style={navBtnStyle} onClick={() => setPickerYear(y => y - 1)}>‹</button>
+                  <span className="text-sm font-semibold text-white">{pickerYear}</span>
+                  <button className={navBtnClass} style={navBtnStyle} onClick={() => setPickerYear(y => y + 1)}>›</button>
+                </div>
+                {/* Month grid */}
+                <div className="grid grid-cols-3 gap-1">
+                  {MONTHS.map((month, i) => {
+                    const isActive = currentDate.getFullYear() === pickerYear && currentDate.getMonth() === i
+                    return (
+                      <button
+                        key={month}
+                        onClick={() => goToMonth(i)}
+                        className="rounded-md py-1.5 text-xs font-semibold transition-colors"
+                        style={{
+                          backgroundColor: isActive ? '#2e1a3a' : 'transparent',
+                          color: isActive ? 'white' : 'var(--color-text-muted)',
+                          border: 'none',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {month}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right: invisible spacer to keep title centered */}
+          <div className="flex items-center gap-1 invisible" aria-hidden="true">
+            <button className={navBtnClass}>‹</button>
+            <button className={navBtnClass}>›</button>
+            {!isMobile && <button className={navBtnClass}>Today</button>}
+          </div>
+        </div>
+
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           events={calendarEvents}
           eventClick={handleEventClick}
+          datesSet={handleDatesSet}
           height="auto"
-          headerToolbar={
-            isMobile
-              ? { left: 'prev,next', center: 'title', right: '' }
-              : { left: 'prev,next today', center: 'title', right: '' }
-          }
+          headerToolbar={false}
           dayMaxEvents={isMobile ? 1 : 3}
           fixedWeekCount={false}
         />

@@ -16,13 +16,10 @@ const DEFAULT_FORM = {
 };
 
 const inputClass =
-  'w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all';
+  'w-full rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none transition-all border border-[var(--color-border-input)] focus:border-[var(--color-border-focus)]';
 const inputStyle = {
   backgroundColor: 'var(--color-bg-input)',
-  border: '1px solid var(--color-border-input)',
 };
-const focusOn = (e) => (e.target.style.borderColor = 'var(--color-border-focus)');
-const focusOff = (e) => (e.target.style.borderColor = 'var(--color-border-input)');
 
 function FieldLabel({ htmlFor, children }) {
   return (
@@ -128,8 +125,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('contactName', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.contactName} />
         </div>
@@ -145,8 +141,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('phone', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.phone} />
         </div>
@@ -162,8 +157,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('email', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.email} />
         </div>
@@ -178,8 +172,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('eventDate', e.target.value)}
             className={inputClass}
             style={{ ...inputStyle, colorScheme: 'dark' }}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.eventDate} />
         </div>
@@ -195,8 +188,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('location', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.location} />
         </div>
@@ -211,8 +203,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('dropOffTime', e.target.value)}
             className={inputClass}
             style={{ ...inputStyle, colorScheme: 'dark' }}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.dropOffTime} />
         </div>
@@ -227,8 +218,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('pickUpTime', e.target.value)}
             className={inputClass}
             style={{ ...inputStyle, colorScheme: 'dark' }}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.pickUpTime} />
         </div>
@@ -246,8 +236,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('deliveryFee', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.deliveryFee} />
         </div>
@@ -265,8 +254,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('depositAmount', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           />
           <FieldError message={errors.depositAmount} />
         </div>
@@ -280,8 +268,7 @@ export default function BookingForm({ initialValues, onSubmit, onCancel, loading
             onChange={(e) => setField('paymentStatus', e.target.value)}
             className={inputClass}
             style={inputStyle}
-            onFocus={focusOn}
-            onBlur={focusOff}
+
           >
             <option value="DEPOSIT">DEPOSIT</option>
             <option value="PAID">PAID</option>

@@ -100,13 +100,30 @@ export default function BookingsPage() {
     setIsModalOpen(false);
   }
 
+  function handleEditBooking(booking) {
+    setEditingBooking(booking);
+    setIsModalOpen(true);
+  }
+
+  function handleCompleteJob(id) {
+    setBookings((prev) =>
+      prev.map((b) => (b.id === id ? { ...b, status: 'COMPLETED' } : b))
+    );
+  }
+
   function handleBookingSubmit(formData) {
-    const newBooking = {
-      ...formData,
-      id: Date.now(),
-      status: 'UPCOMING',
-    };
-    setBookings((prev) => [newBooking, ...prev]);
+    if (editingBooking) {
+      setBookings((prev) =>
+        prev.map((b) => (b.id === editingBooking.id ? { ...b, ...formData } : b))
+      );
+    } else {
+      const newBooking = {
+        ...formData,
+        id: Date.now(),
+        status: 'UPCOMING',
+      };
+      setBookings((prev) => [newBooking, ...prev]);
+    }
     setIsModalOpen(false);
   }
 
@@ -165,7 +182,7 @@ export default function BookingsPage() {
         <table className="w-full text-sm">
           <thead>
             <tr style={{ backgroundColor: '#111111' }}>
-              {['Contact', 'Event Date', 'Location', 'Items', 'Payment', 'Status'].map((col) => (
+              {['Contact', 'Event Date', 'Location', 'Items', 'Payment', 'Status', 'Actions'].map((col) => (
                 <th
                   key={col}
                   className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider"
@@ -225,6 +242,28 @@ export default function BookingsPage() {
                   {/* Booking Status */}
                   <td className="px-5 py-4">
                     <StatusBadge value={booking.status} />
+                  </td>
+
+                  {/* Actions */}
+                  <td className="px-5 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => handleEditBooking(booking)}
+                        className="px-3 py-1 rounded-md text-xs font-semibold text-white transition-opacity hover:opacity-80"
+                        style={{ background: 'var(--color-brand)' }}
+                      >
+                        Edit
+                      </button>
+                      {booking.status === 'UPCOMING' && (
+                        <button
+                          onClick={() => handleCompleteJob(booking.id)}
+                          className="px-3 py-1 rounded-md text-xs font-semibold text-white transition-opacity hover:opacity-80"
+                          style={{ background: '#16a34a' }}
+                        >
+                          Complete Job
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               );
@@ -292,13 +331,33 @@ export default function BookingsPage() {
                   )}
                 </span>
               </div>
+
+              {/* Row 5: Actions */}
+              <div className="flex items-center gap-4 pt-1" style={{ borderTop: '1px solid var(--color-border-subtle)' }}>
+                <button
+                  onClick={() => handleEditBooking(booking)}
+                  className="px-3 py-1 rounded-md text-xs font-semibold text-white transition-opacity hover:opacity-80"
+                  style={{ background: 'var(--color-brand)' }}
+                >
+                  Edit
+                </button>
+                {booking.status === 'UPCOMING' && (
+                  <button
+                    onClick={() => handleCompleteJob(booking.id)}
+                    className="px-3 py-1 rounded-md text-xs font-semibold text-white transition-opacity hover:opacity-80"
+                    style={{ background: '#16a34a' }}
+                  >
+                    Complete Job
+                  </button>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
 
       {/* New Booking Modal */}
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} title="New Booking">
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} title={editingBooking ? 'Edit Booking' : 'New Booking'}>
         <BookingForm
           key={editingBooking?.id ?? 'new'}
           initialValues={editingBooking}

@@ -10,16 +10,21 @@ const navItems = [
   { label: 'Calendar', path: '/admin/calendar' },
 ];
 
-export default function Sidebar({ isOpen = true }) {
+export default function Sidebar({ isOpen = true, onNavigate }) {
   const navigate = useNavigate();
   const [confirming, setConfirming] = useState(false);
 
   return (
     <aside
-      className="flex flex-col h-screen shrink-0 overflow-hidden"
+      className={[
+        'flex flex-col h-screen shrink-0 overflow-hidden',
+        'fixed md:static top-0 left-0 z-50',
+        'w-[220px] transition-[transform,width] duration-300 ease-in-out',
+        isOpen
+          ? 'translate-x-0 md:w-[220px]'
+          : '-translate-x-full md:translate-x-0 md:w-[220px]',
+      ].join(' ')}
       style={{
-        width: isOpen ? '220px' : '0px',
-        transition: 'width 300ms ease-in-out',
         backgroundColor: 'var(--color-bg-card)',
         borderRight: isOpen ? '1px solid var(--color-border-subtle)' : 'none',
       }}
@@ -38,6 +43,7 @@ export default function Sidebar({ isOpen = true }) {
           <NavLink
             key={path}
             to={path}
+            onClick={onNavigate}
             className="rounded-lg px-3 py-2 text-sm font-medium transition-colors"
             style={({ isActive }) => ({
               color: isActive ? 'var(--color-brand)' : 'var(--color-text-muted)',

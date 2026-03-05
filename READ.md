@@ -16,7 +16,7 @@ Replaces manual Google Sheets + calendar workflows with a purpose-built app feat
 ## 🛠️ Tech Stack
 | Layer | Technology |
 |-------|-----------|
-| Backend | Java 25, Spring Boot 3.x, Spring Security + JWT |
+| Backend | Java 25, Spring Boot 4.x, Spring Security + JWT |
 | Database | PostgreSQL / AWS RDS |
 | Frontend | React 18, Vite, Tailwind CSS, Axios |
 | Deployment | AWS Elastic Beanstalk, S3, CloudFront |
